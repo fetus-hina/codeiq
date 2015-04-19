@@ -16,8 +16,8 @@ INSTALL
     php composer.phar install
     ```
 
-QUESTION
---------
+PROBLEM TO BE SOLVED
+--------------------
 
 * 逆ポーランド電卓を実装せよ
 * `(1+sqrt(2))*(1-sqrt(2))` を逆ポーランド記法に変換し、計算せよ
