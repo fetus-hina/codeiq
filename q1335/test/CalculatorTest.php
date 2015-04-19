@@ -6,6 +6,28 @@ use jp3cki\q1335\Calculator;
 
 class CalculatorTest extends PHPUnit_Framework_TestCase
 {
+    public function testPi()
+    {
+        $calc = new Calculator();
+        $this->assertEquals(
+            3.14159265358979,
+            $calc->step('pi')->step('?'),
+            '',
+            0.0000000000001
+        );
+    }
+
+    public function testE()
+    {
+        $calc = new Calculator();
+        $this->assertEquals(
+            2.7182818285,
+            $calc->step('e')->step('?'),
+            '',
+            0.000000001
+        );
+    }
+
     public function testAdd()
     {
         $calc = new Calculator();
@@ -97,6 +119,72 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $calc->step(-1)->step('sqrt')->step('?');
     }
 
+    public function testLogE()
+    {
+        $calc = new Calculator();
+        $this->assertEquals(
+            0,
+            $calc->step(1)->step('ln')->step('?')
+        );
+        
+        $calc->reset();
+        $this->assertEquals(
+            2.302585093,
+            $calc->step(10)->step('ln')->step('?'),
+            '',
+            0.00000001
+        );
+    }
+
+    public function testLog10()
+    {
+        $calc = new Calculator();
+        $this->assertEquals(
+            0,
+            $calc->step(1)->step('log10')->step('?')
+        );
+        
+        $calc->reset();
+        $this->assertEquals(
+            1,
+            $calc->step(10)->step('log10')->step('?')
+        );
+        
+        $calc->reset();
+        $this->assertEquals(
+            0.301029996,
+            $calc->step(2)->step('log10')->step('?'),
+            '',
+            0.00000001
+        );
+    }
+
+    public function testLog2()
+    {
+        $calc = new Calculator();
+        foreach(['log2', 'lb'] as $op) {
+            $calc->reset();
+            $this->assertEquals(
+                0,
+                $calc->step(1)->step($op)->step('?')
+            );
+            
+            $calc->reset();
+            $this->assertEquals(
+                10,
+                $calc->step(1024)->step($op)->step('?')
+            );
+            
+            $calc->reset();
+            $this->assertEquals(
+                1.58496250072,
+                $calc->step(3)->step($op)->step('?'),
+                '',
+                0.0000000001
+            );
+        }
+    }
+
     public function testDisplay()
     {
         $calc = new Calculator();
@@ -104,14 +192,14 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         ob_start();
         $calc->step('.');
         $stdout = ob_get_clean();
-	$this->assertEquals(sprintf('%f', 1.0), trim($stdout));
+        $this->assertEquals(sprintf('%f', 1.0), trim($stdout));
 
         $calc->reset();
         $calc->step(42);
         ob_start();
         $calc->step('.');
         $stdout = ob_get_clean();
-	$this->assertEquals(sprintf('%f', 42.0), trim($stdout));
+        $this->assertEquals(sprintf('%f', 42.0), trim($stdout));
     }
 
     public function testUnknownToken()

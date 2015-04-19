@@ -41,6 +41,14 @@ class Calculator
                 $this->opPush($token);
                 break;
 
+            case $token === 'pi':
+                $this->opPush(M_PI);
+                break;
+
+            case $token === 'e':
+                $this->opPush(M_E);
+                break;
+
             case $token === '+':
                 $this->opAdd();
                 break;
@@ -62,11 +70,23 @@ class Calculator
                 break;
 
             case $token === '?':
-                // 仕様外: スタックからpopしてその値を返す（テスト用）
                 return $this->opPop();
 
             case $token === 'sqrt':
                 $this->opSqrt();
+                break;
+
+            case $token === 'ln':
+                $this->opLog(M_E);
+                break;
+
+            case $token === 'log10':
+                $this->opLog(10);
+                break;
+
+            case $token === 'log2':
+            case $token === 'lb':
+                $this->opLog(2);
                 break;
 
             default:
@@ -147,6 +167,14 @@ class Calculator
             throw new RuntimeException('Square root of negative value');
         }
         $this->push(sqrt($value));
+        $this->fireOnAfterOperation();
+    }
+
+    protected function opLog($base)
+    {
+        $this->fireOnBeforeOperation();
+        $value = $this->pop1();
+        $this->push(log($value, $base));
         $this->fireOnAfterOperation();
     }
 
