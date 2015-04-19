@@ -1,0 +1,22 @@
+{
+    "name": "jp3cki/codeiq-q1335",
+    "authors": [
+        {
+            "name": "AIZAWA Hina",
+            "email": "hina@bouhime.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*",
+        "squizlabs/php_codesniffer": "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "jp3cki\\q1335\\": "src",
+            "jp3cki\\q1335\\test\\": "test"
+        }
+    }
+}
